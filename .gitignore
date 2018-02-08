@@ -1,11 +1,9 @@
 /checkpoint
 /result
 /save
-/hard_dataset
 /__pycache__
 /dataset/__pycache__
+/dataset/dataset
+/dataset/pre_dataset
 /models/__pycache__
-/models/mining_label.csv
-/models/test_label.csv
-/models/train_label.csv
-/models/valid_label.csv
+
