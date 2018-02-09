@@ -7,11 +7,10 @@ import torch.utils.data as data
 import csv
 import cv2
 import random
+sys.path.append('..')
 
 from PIL import Image
-
-DATASET_PATH = '/mnt/disk3/interns/camelyon17/pre_dataset/dataset/' 
-TEST_PATH = '/home/interns/camelyon17/dataset/dataset/test0201/'
+from user_define import config as cf
 
 
 class camel(data.Dataset):
@@ -43,14 +42,10 @@ class camel(data.Dataset):
         elif self.usage == 'mining':
             self.ratio = train_ratio
             csv_path = self.root+'label/mining_label.csv'
-            csv_path2 = DATASET_PATH+'train/label/train_label.csv'
+            csv_path2 = cf.dataset_path+'train/label/train_label.csv'
         
         else: # self.usage == 'test'
             pass
-
-        csv_file = open(csv_path, 'r', encoding='utf-8')
-        csv_reader = csv.reader(csv_file)
-        cnt = 0 
 
         if self.usage == 'test':
             for img in os.listdir(self.root):
@@ -58,6 +53,10 @@ class camel(data.Dataset):
                 self.data.append(array)
         
         else:
+            csv_file = open(csv_path, 'r', encoding='utf-8')
+            csv_reader = csv.reader(csv_file)
+            cnt = 0
+            
             for img, label in csv_reader:
                 array = cv2.imread(self.root + img, cv2.IMREAD_COLOR)
                 self.data.append(array)
@@ -77,12 +76,12 @@ class camel(data.Dataset):
             self.limit = len(self.data) * self.ratio
             csv_file = open(csv_path2, 'r', encoding ='utf-8')
             csv_reader = csv.reader(csv_file)
-            rat = len(os.listdir(DATASET_PATH+'train')) / self.limit
+            rat = len(os.listdir(cf.dataset_path+'train')) / self.limit
             
             for img, label in csv_reader:
                 rand = random.randint(1,ratio)
                 if rand % rat == 0:
-                    array = cv2.imread(DATASET_PATH + 'train/' + img, cv2.IMREAD_COLOR)
+                    array = cv2.imread(cf.dataset_path + 'train/' + img, cv2.IMREAD_COLOR)
                     self.data.append(array)
                     self.labels.append(label)
                     cnt += 1
@@ -137,19 +136,19 @@ class camel(data.Dataset):
        
 def get_dataset(train_transform, test_transform, train_max, 
                 val_max, subtest_max, ratio=0, mining_mode=False):
-    train_dataset = camel(DATASET_PATH + 'train/', usage='train',
+    train_dataset = camel(cf.dataset_path + 'train/', usage='train',
                             limit = train_max, transform=train_transform)
     
-    val_dataset = camel(DATASET_PATH + 'validation/', usage='val',
+    val_dataset = camel(cf.dataset_path + 'validation/', usage='val',
                             limit = val_max, transform=test_transform)
     
-    subtest_dataset = camel(DATASET_PATH + 'test/', usage='subtest', 
+    subtest_dataset = camel(cf.dataset_path + 'test/', usage='subtest', 
                             limit = subtest_max, transform=test_transform)
     
-    test_dataset = camel(TEST_PATH, usage ='test',transform=test_transform)
+    test_dataset = camel(cf.test_path, usage ='test',transform=test_transform)
     
     if mining_mode == True:
-        mining_dataset = camel(DATASET_PATH + 'mining/', usage='mining',
+        mining_dataset = camel(cf.dataset_path + 'mining/', usage='mining',
                                 train_ratio = ratio, transform=train_transform)
         return train_dataset, val_dataset, subtest_dataset, test_dataset, mining_dataset
 

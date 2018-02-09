@@ -9,41 +9,28 @@ import random
 import shutil
 import csv
 
+from sklearn.metrics import roc_auc_score
 from xml.etree.ElementTree import parse
 from PIL import Image
 from multiprocessing import Process
+from user_define import config as cf
+from user_define import hyperparameter as hp
 
-ORIGIN_PATH  = '/home/interns/camelyon17'
-XML_PATH = '/mnt/disk3/interns/camelyon17/pre_dataset/annotation/'
-SLIDE_PATH = '/mnt/disk3/interns/camelyon17/pre_dataset/slide/'
-MASK_PATH = '/home/interns/dataset/pre_dataset/mask/'
-PATCH_PATH = '/mnt/disk3/interns/camelyon17/pre_dataset/patch/'
-DATASET_PATH = '/mnt/disk3/interns/camelyon17/pre_dataset/dataset/'
-MINING_CSV_PATH = '/home/interns/camelyon17/dataset/pre_dataset/difficult/'
 
-MASK_LEVEL = 4 # fixed 
-MAP_LEVEL = 4 # fixed
-SLIDE_NUM = 3
-
-NORMAL_THRESHOLD = 0.1
-NORMAL_SEL_RATIO = 1
-NORMAL_SEL_MAX = 100000
-
-TUMOR_THRESHOLD = 0.8
-TUMOR_SEL_RATIO = 1
-TUMOR_SEL_MAX = 100000
-
-MINING_CSV_NUM = 70
-
+TOTAL_BAR_LENGTH = 65.
 
 _, term_width = os.popen('stty size', 'r').read().split()
 term_width = int(term_width)
 
-TOTAL_BAR_LENGTH = 65.
 last_time = time.time()
 begin_time = last_time
 
+
 def progress_bar(current, total, msg=None):
+    '''
+    
+    '''
+
     global last_time, begin_time
     if current == 0:
         begin_time = time.time()  # Reset for new bar.
@@ -89,6 +76,10 @@ def progress_bar(current, total, msg=None):
 
 
 def format_time(seconds):
+    '''
+    
+    '''
+
     days = int(seconds / 3600/24)
     seconds = seconds - days*3600*24
     hours = int(seconds / 3600)
@@ -121,8 +112,12 @@ def format_time(seconds):
     return f
 
 
+
 def stats(outputs, targets):
-   
+    '''
+
+    '''
+
     correct = [0] * 201
     tp = [0] * 201
     tn = [0] * 201
@@ -154,7 +149,6 @@ def stats(outputs, targets):
             thres_cost = fp[i]+fn[i]
             thres_idx = i
 
-    acc = 100.*correct[thres_idx]/total
     correct = correct[thres_idx]
     tp = tp[thres_idx]
     tn = tn[thres_idx]
@@ -164,13 +158,14 @@ def stats(outputs, targets):
     precision = (tp+1e-7)/(tp+fp+1e-7)
     specificity = (tn+1e-7)/(fp+tn+1e-7)
     f1_score = 2.*precision*recall/(precision+recall+1e-7)
-    auc = roc_auc_score(targets_list, outputs_list) 
+    auc = roc_auc_score(targets, outputs) 
     threshold = thres_idx * 0.005
 
-    return acc, correct, tp, tn, fp, fn, recall, precision, specificity, f1_score,auc,threshold
+    return correct, tp, tn, fp, fn, recall, precision, specificity, f1_score,auc,threshold
+
+
 
 def make_dir(slide_num, flags):
-    
     '''
         make directory of files using flags
 
@@ -179,31 +174,31 @@ def make_dir(slide_num, flags):
     '''
 
     if flags == 'slide':
-        return SLIDE_PATH + 'b_' + str(slide_num) + '.tif'
+        return cf.slide_path + 'b_' + str(slide_num) + '.tif'
 
     elif flags == 'xml':
-        return XML_PATH + 'b_' + str(slide_num) +'.xml'
+        return cf.xml_path + 'b_' + str(slide_num) +'.xml'
 
     elif flags == 'mask':
-        return MASK_PATH 
+        return cf.mask_path
 
     elif flags == 'map':
-        return MASK_PATH + 'b' + str(slide_num) + '_map.png'
+        return cf.mask_path + 'b' + str(slide_num) + '_map.png'
 
     elif flags == 'tumor_mask':
-        return MASK_PATH + 'b' + str(slide_num) + '_tumor_mask.png'
+        return cf.mask_path + 'b' + str(slide_num) + '_tumor_mask.png'
 
     elif flags == 'tumor_patch':
-        return PATCH_PATH + 'b' + str(slide_num) + '/tumor/'
+        return cf.patch_path + 'b' + str(slide_num) + '/tumor/'
 
     elif flags == 'normal_mask':
-        return MASK_PATH + 'b' + str(slide_num) + '_normal_mask.png'
+        return cf.mask_path + 'b' + str(slide_num) + '_normal_mask.png'
 
     elif flags == 'normal_patch':
-        return PATCH_PATH + 'b' + str(slide_num) + '/normal/'
+        return cf.patch_path + 'b' + str(slide_num) + '/normal/'
     
     elif flags == 'tissue_mask':
-        return MASK_PATH + 'b' + str(slide_num) + '_tissue_mask.png'
+        return cf.mask_path + 'b' + str(slide_num) + '_tissue_mask.png'
 
     else:
         print('make_dir flags error')
@@ -211,8 +206,7 @@ def make_dir(slide_num, flags):
 
 
 
-def chk_file(filedir,filename):
-    
+def chk_file(filedir,filename):    
     '''
         check whether file(filename) is existed in filedir or not
         if existed, return True / else, return False
@@ -227,14 +221,13 @@ def chk_file(filedir,filename):
         if file_name == filename:
             exist = True
     
-    os.chdir(ORIGIN_PATH)
+    os.chdir(cf.origin_path)
 
     return exist
 
 
 
 def read_xml(slide_num, mask_level):
-
     '''
         read xml files which has tumor coordinates list
         return coordinates of tumor areas
@@ -253,10 +246,12 @@ def read_xml(slide_num, mask_level):
     return np.array(coors_list)
 
 
+
 def make_patch(slide_num, mask_level):
     '''
 
     '''
+
     slide_path = make_dir(slide_num,'slide')
     map_path = make_dir(slide_num, 'map')
     mask_folder_path = make_dir(slide_num, 'mask')
@@ -265,12 +260,12 @@ def make_patch(slide_num, mask_level):
     normal_mask_path = make_dir(slide_num, 'normal_mask')
     normal_patch_path = make_dir(slide_num,'normal_patch')
    
-    tumor_threshold = TUMOR_THRESHOLD
-    tumor_sel_ratio = TUMOR_SEL_RATIO
-    tumor_sel_max = TUMOR_SEL_MAX
-    normal_threshold = NORMAL_THRESHOLD
-    normal_sel_ratio = NORMAL_SEL_RATIO
-    normal_sel_max = NORMAL_SEL_MAX
+    tumor_threshold = hp.tumor_threshold
+    tumor_sel_ratio = hp.tumor_sel_ratio
+    tumor_sel_max = hp.tumor_sel_max
+    normal_threshold = hp.normal_threshold
+    normal_sel_ratio = hp.normal_sel_ratio
+    normal_sel_max = hp.normal_sel_max
 
     tumor_mask_exist = chk_file(mask_folder_path, 'b'+str(slide_num)+'_tumor_mask.png')
     normal_mask_exist = chk_file(mask_folder_path, 'b'+str(slide_num)+'_normal_mask.png')
@@ -338,8 +333,8 @@ def make_patch(slide_num, mask_level):
     cv2.imwrite(map_path, slide_map)
 
 
-def make_mask(slide_num, mask_level):
-    
+
+def make_mask(slide_num, mask_level):    
     '''
         make tumor patch using tumor mask
     '''
@@ -355,7 +350,7 @@ def make_mask(slide_num, mask_level):
 
     #slide loading
     slide = openslide.OpenSlide(slide_path)
-    slide_map = np.array(slide.get_thumbnail(slide.level_dimensions[MAP_LEVEL]))
+    slide_map = np.array(slide.get_thumbnail(slide.level_dimensions[hp.map_level]))
 
     # xml loading
     coors_list = read_xml(slide_num, mask_level)
@@ -396,10 +391,12 @@ def make_mask(slide_num, mask_level):
         cv2.imwrite(normal_mask_path, normal_mask)
 
 
+
 def divide_patch(slide_num, flags):
     '''
 
     '''
+
     tumor_patch_path = make_dir(slide_num, 'tumor_patch')
     normal_patch_path = make_dir(slide_num, 'normal_patch')
 
@@ -415,29 +412,31 @@ def divide_patch(slide_num, flags):
 
     if flags == 'train':
         for i in range(tumor_num):
-            shutil.move(tumor_files[i],DATASET_PATH+'train/')
+            shutil.move(tumor_files[i],cf.dataset_path+'train/')
 
         os.chdir(normal_patch_path)
 
         for i in range(normal_num):
-            shutil.move(normal_files[i], DATASET_PATH+'train/')
+            shutil.move(normal_files[i], cf.dataset_path+'train/')
          
     else:
         for i in range(tumor_num):
             if i%2 == 0:
-                shutil.move(tumor_files[i],DATASET_PATH+'validation/')
+                shutil.move(tumor_files[i], cf.dataset_path+'validation/')
             else:
-                shutil.move(tumor_files[i],DATASET_PATH+'test/')
+                shutil.move(tumor_files[i], cf.dataset_path+'test/')
         
         os.chdir(normal_patch_path)
 
         for i in range(normal_num):
             if i%2 == 0:
-                shutil.move(normal_files[i],DATASET_PATH+'validation/')
+                shutil.move(normal_files[i], cf.dataset_path+'validation/')
             else:
-                shutil.move(normal_files[i],DATASET_PATH+'test/')
+                shutil.move(normal_files[i], cf.dataset_path+'test/')
         
-    os.chdir(ORIGIN_PATH)
+    os.chdir(cf.origin_path)
+
+
 
 def make_label():
     '''
@@ -445,10 +444,10 @@ def make_label():
     '''
        
     # path init
-    train_path = DATASET_PATH + 'train/label/train_label.csv'
-    valid_path = DATASET_PATH + 'validation/label/valid_label.csv'
-    test_path = DATASET_PATH + 'test/label/test_label.csv'
-    mining_path = DATASET_PATH + 'mining/label/mining_label.csv'
+    train_path = cf.dataset_path + 'train/label/train_label.csv'
+    valid_path = cf.dataset_path + 'validation/label/valid_label.csv'
+    test_path = cf.dataset_path + 'test/label/test_label.csv'
+    mining_path = cf.dataset_path + 'mining/label/mining_label.csv'
 
     # csv files init
     train_csv = open(train_path, 'w', encoding='utf-8')
@@ -464,7 +463,7 @@ def make_label():
     
     
     # make train label.csv
-    file_list = os.listdir(DATASET_PATH+'train')
+    file_list = os.listdir(cf.dataset_path+'train')
     label = {}
 
     for file_name in file_list:
@@ -484,7 +483,7 @@ def make_label():
         train_writer.writerow([key, val])
 
     # make valid label.csv
-    file_list = os.listdir(DATASET_PATH+'validation')
+    file_list = os.listdir(cf.dataset_path+'validation')
     label = {}
 
     for file_name in file_list:
@@ -504,7 +503,7 @@ def make_label():
         valid_writer.writerow([key, val])
 
     # make test label.csv
-    file_list = os.listdir(DATASET_PATH+'test')
+    file_list = os.listdir(cf.dataset_path+'test')
     label = {}
 
     for file_name in file_list:
@@ -524,7 +523,7 @@ def make_label():
         test_writer.writerow([key, val])
     
     # make mining label.csv
-    file_list = os.listdir(DATASET_PATH+'mining')
+    file_list = os.listdir(cf.dataset_path+'mining')
     label = {}
 
     for file_name in file_list:
@@ -548,20 +547,23 @@ def make_label():
     test_csv.close()
     mining_csv.close()
 
+
+
 def mining():
     '''
         copy files based on csv files which have hard patches
     '''
 
-    for i in range(MINING_CSV_NUM):
-        mining_csv = open(MINING_CSV_PATH+'wrong_data_epoch'+str(i)+'.csv',
+    for i in range(cf.mining_csv_path):
+        mining_csv = open(cf.mining_csv_path+'wrong_data_epoch'+str(i)+'.csv',
                             'r', encoding='utf-8')
         reader = csv.reader(mining_csv)
         
         for img in reader:
             if str(img[0])[0] == 't':
-                shutil.copy(DATASET_PATH+'train/'+str(img[0]),
-                            DATASET_PATH+'mining/'+str(img[0]))
+                shutil.copy(cf.dataset_path+'train/'+str(img[0]),
+                            cf.dataset_path+'mining/'+str(img[0]))
+
 
 
 '''

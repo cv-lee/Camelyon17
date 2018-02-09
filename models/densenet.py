@@ -83,7 +83,7 @@ class _DenseLayer(nn.Sequential):
         self.add_module('conv.2', nn.Conv2d(bn_size * growth_rate, growth_rate,
                         kernel_size=3, stride=1, padding=1, bias=False)),
         self.drop_rate = drop_rate
-
+    
     def forward(self, x):
         new_features = super(_DenseLayer, self).forward(x)
         if self.drop_rate > 0:
@@ -167,7 +167,7 @@ class DenseNet(nn.Module):
 
     def forward(self, x):
         features = self.features(x)
-        out = F.relu(features, inplace=True)
+        out = F.relu(features,inplace=True)
         out = F.avg_pool2d(out, kernel_size=10, stride=1).view(features.size(0), -1)
         out = self.classifier(out)
         out = self.sig(out)
