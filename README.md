@@ -14,7 +14,11 @@ An output of model is a float number from 0 to 1. (0: Normal, 1: Tumor)
 
 
 # 2. Dataset
-
+'''
+utils.py
+dataset_train.py
+dataset_eval.py
+'''
 
 ### 2-1) Overview
 [CAMELYON17](https://camelyon17.grand-challenge.org/) is the second grand challenge in pathology organised 
@@ -35,13 +39,24 @@ Convert Images brightness, contrast, saturation, hue slightly
 
 
 ### 2-3) Mask
+Using several masks, patch is extracted from them with mask inclusion ratio(hyperparameter) 
 
+- Tissue Mask
+![]()
+- Tumor Mask
+![]()
+- Normal Mask
+![]()
 
 ### 2-4) Hard Mining
-
+Difficult train dataset which predicted incorrectly several times is collected in csv file.
+Net is trained with combination of difficult train dataset and original train dataset.
 
 
 # 3. Train
+'''
+train.py
+'''
 
 ### 3-1) Optimizer 
 [Stochastic Gradient Descent Optimizer](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)
@@ -69,7 +84,9 @@ Binary Cross Entropy Loss (torch.nn.BCELoss)
 
 
 # 5. HeatMap
-
+'''
+eval.py
+'''
 
 # 6. Requirement
 [torch](http://pytorch.org/docs/master/nn.html)
