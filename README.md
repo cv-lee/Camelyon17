@@ -8,8 +8,14 @@ An output of model is a float number from 0 to 1. (0: Normal, 1: Tumor)
 
 
 ### 1-2) Architecture
+```
+models/densenet.py
+models/resnet.py
+```
+
 [DenseNet](https://arxiv.org/abs/1608.06993)
-[ResNet](https://arxiv.org/abs/1512.03385)
+ / [ResNet](https://arxiv.org/abs/1512.03385)
+
 ![](https://i.imgur.com/7yH9SKm.jpg)
 
 
