@@ -31,7 +31,8 @@ class hyperparameter():
     '''
 
     #utils.py
-    mask_level = 4 # fixed 
+    patch_size = 304
+    mask_level = 4 # fixed
     map_level = 4 # fixed
     slide_num = 3
 
@@ -50,12 +51,18 @@ class hyperparameter():
     tissue_threshold = 0.4
 
     #main.py
-    train_num = 186  # max: 186,800
-    val_num = 629     # max: 62,940
-    subtest_num = 629 # max: 62,940    
+    train_num = 186     # max: 186,800
+    val_num = 629       # max: 62,940
+    subtest_num = 629   # max: 62,940    
     train_ratio = 1
 
+    default_lr = 0.005
+    momentum = 0.9
+    weight_decay = 5e-4
+    
     epoch = 2
+    batch_size = 250
+    num_workers = 40
     mining = False
     wrong_save = False
 

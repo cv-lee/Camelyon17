@@ -117,14 +117,16 @@ def stats(outputs, targets):
     '''
 
     '''
+    
+    num = len(np.arange(0,1.005,0.005))
 
-    correct = [0] * 201
-    tp = [0] * 201
-    tn = [0] * 201
-    fp = [0] * 201
-    fn = [0] * 201
-    recall = [0] * 201
-    specificity = [0] * 201
+    correct = [0] * num
+    tp = [0] * num
+    tn = [0] * num
+    fp = [0] * num
+    fn = [0] * num
+    recall = [0] * num
+    specificity = [0] * num
 
     outputs_num = outputs.shape[0]
     for i, threshold in enumerate(np.arange(0, 1.005, 0.005)):
@@ -142,7 +144,7 @@ def stats(outputs, targets):
     thres_cost = fp[0]+fn[0]
     thres_idx = 0
 
-    for i in range(len(np.arange(0, 1.005, 0.005))):
+    for i in range(num):
         recall[i] = tp[i] / (tp[i]+fn[i])
         specificity[i] = tn[i] / (fp[i]+tn[i])
         if thres_cost > (fp[i]+fn[i]):
@@ -278,14 +280,15 @@ def make_patch(slide_num, mask_level):
     tumor_mask = cv2.imread(tumor_mask_path, 0)
     normal_mask = cv2.imread(normal_mask_path, 0)
 
-    width, height = np.array(slide.level_dimensions[0])//304
+    p_size = hp.patch_size
+    width, height = np.array(slide.level_dimensions[0])//p_size
     total = width * height
     all_cnt = 0
     t_cnt = 0
     n_cnt = 0
     t_over = False
     n_over = False
-    step = int(304/(2**mask_level))
+    step = int(p_size/(2**mask_level))
 
     for i in range(width):
         for j in range(height):
@@ -301,7 +304,7 @@ def make_patch(slide_num, mask_level):
             # extract tumor patch
             if (tumor_area_ratio > tumor_threshold) and (ran <= tumor_sel_ratio) and not t_over:
                 patch_name = tumor_patch_path + 't_b' + str(slide_num) + '_' + str(i) + '_' + str(j) + '_.png'
-                patch = slide.read_region((304*i,304*j), 0, (304,304))
+                patch = slide.read_region((p_size*i,p_size*j), 0, (p_size,p_size))
                 patch.save(patch_name)
                 cv2.rectangle(slide_map, (step*i,step*j), (step*(i+1),step*(j+1)), (0,0,255), 1)
                 t_cnt += 1
@@ -310,7 +313,7 @@ def make_patch(slide_num, mask_level):
             # extract normal patch
             elif (normal_area_ratio > normal_threshold) and (ran <= normal_sel_ratio) and (tumor_area_ratio == 0) and not n_over:
                 patch_name = normal_patch_path + 'n_b' + str(slide_num) + '_' + str(i) + '_' + str(j) + '_.png'
-                patch = slide.read_region((304*i,304*j), 0, (304,304))
+                patch = slide.read_region((p_size*i,p_size*j), 0, (p_size,p_size))
                 patch.save(patch_name)
                 cv2.rectangle(slide_map, (step*i,step*j), (step*(i+1),step*(j+1)), (255,255,0), 1)
                 n_cnt += 1
