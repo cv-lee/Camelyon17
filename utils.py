@@ -17,6 +17,8 @@ from user_define import config as cf
 from user_define import hyperparameter as hp
 
 
+
+# Parameters for progress_bar Init
 TOTAL_BAR_LENGTH = 65.
 
 _, term_width = os.popen('stty size', 'r').read().split()
@@ -26,9 +28,14 @@ last_time = time.time()
 begin_time = last_time
 
 
+
 def progress_bar(current, total, msg=None):
-    '''
+    ''' print current result of train, valid
     
+    Args:
+        current (int): current batch idx
+        total (int): total number of batch idx
+        msg(str): loss and acc
     '''
 
     global last_time, begin_time
@@ -76,8 +83,10 @@ def progress_bar(current, total, msg=None):
 
 
 def format_time(seconds):
-    '''
-    
+    ''' calculate and formating time 
+
+    Args:
+        seconds (float): time
     '''
 
     days = int(seconds / 3600/24)
@@ -114,7 +123,14 @@ def format_time(seconds):
 
 
 def stats(outputs, targets):
-    '''
+    ''' Using outputs and targets list, calculate true positive,
+        false positive, true negative, false negative, accuracy, 
+        recall, specificity, precision, F1 Score, AUC, best Threshold.
+        And return them
+
+    Args:
+        outputs (numpy array): net outputs list
+        targets (numpy array): correct result list
 
     '''
     
@@ -168,11 +184,13 @@ def stats(outputs, targets):
 
 
 def make_dir(slide_num, flags):
-    '''
-        make directory of files using flags
-
+    ''' make directory of files using flags
         if flags is tumor_patch or normal patch
         additional directory handling is needed
+
+    Args:
+        slide_num (int): number of slide used
+        flags (str): various flags are existed below
     '''
 
     if flags == 'slide':
@@ -209,9 +227,12 @@ def make_dir(slide_num, flags):
 
 
 def chk_file(filedir,filename):    
-    '''
-        check whether file(filename) is existed in filedir or not
-        if existed, return True / else, return False
+    ''' check whether file(filename) is existed in filedir or not
+        if existed, return True. else, return False
+
+    Args: 
+        fliedir (str): directory of the file
+        filename (str): name of the file
     '''
 
     exist = False
@@ -230,9 +251,12 @@ def chk_file(filedir,filename):
 
 
 def read_xml(slide_num, mask_level):
-    '''
-        read xml files which has tumor coordinates list
+    ''' read xml files which has tumor coordinates list
         return coordinates of tumor areas
+
+    Args:
+        slide_num (int): number of slide used
+        maks_level (int): level of mask
     '''
 
     path = make_dir(slide_num, 'xml') 
@@ -250,8 +274,11 @@ def read_xml(slide_num, mask_level):
 
 
 def make_patch(slide_num, mask_level):
-    '''
+    ''' Extract normal, tumor patches using normal, tumor mask
 
+    Args:
+        slide_num (int): number of slide used
+        mask_level (int): level of mask
     '''
 
     slide_path = make_dir(slide_num,'slide')
@@ -338,8 +365,11 @@ def make_patch(slide_num, mask_level):
 
 
 def make_mask(slide_num, mask_level):    
-    '''
-        make tumor patch using tumor mask
+    '''make tumor, normal, tissue mask using xml files and otsu threshold
+
+    Args:
+        slide_num (int): number of slide
+        mask_level (int): level of mask
     '''
 
     # path setting
@@ -396,8 +426,13 @@ def make_mask(slide_num, mask_level):
 
 
 def divide_patch(slide_num, flags):
-    '''
+    ''' divide patches to train set, validation set, test set.
+        specific slides are used only for trainset.
+        others are used only for validationset and testset.
 
+    Args:
+        slide_num (int): number of slide used
+        flags (str): determine wheter the slide might go for train or others
     '''
 
     tumor_patch_path = make_dir(slide_num, 'tumor_patch')
@@ -442,8 +477,8 @@ def divide_patch(slide_num, flags):
 
 
 def make_label():
-    '''
-
+    ''' make label csv file using file name (ex. t_ ... Tumor / n_ ... Normal)
+    
     '''
        
     # path init
@@ -553,8 +588,8 @@ def make_label():
 
 
 def mining():
-    '''
-        copy files based on csv files which have hard patches
+    ''' copy files based on csv files which have hard patches
+    
     '''
 
     for i in range(cf.mining_csv_path):
@@ -570,6 +605,7 @@ def mining():
 
 
 '''
+# run
 make_mask(SLIDE_NUM, MASK_LEVEL)
 make_patch(SLIDE_NUM, MASK_LEVEL)
 divide_patch(SLIDE_NUM,'train')
@@ -578,7 +614,9 @@ mining()
 '''
 
 
+
 '''
+# multiprocessing run
 if __name__ == "__main__":
     procs = []
     
