@@ -1,23 +1,22 @@
 # 1. Camelyon17 #
 
 
-## 1-1) About
+### 1-1) About
 This project is the CNN model to diagnose breast cancer. It consists of a CNN model,
 Desenet and ResNet. The criteria for performance is AUC(Area Under the Curve). 
 An output of model is a float number from 0 to 1. (0: Normal, 1: Tumor)
 
 
-## 1-2) Architecture
+### 1-2) Architecture
 ![](https://i.imgur.com/7yH9SKm.jpg)
 
 
 
 
 # 2. Dataset
-[camelyon 17 dataset](https://camelyon17.grand-challenge.org/)
 
 
-## 2-1) Overview
+### 2-1) Overview
 [CAMELYON17](https://camelyon17.grand-challenge.org/) is the second grand challenge in pathology organised 
 by the Diagnostic Image Analysis Group (DIAG) and Department of Pathology of the Radboud University Medical 
 Center (Radboudumc) in Nijmegen, The Netherlands.
@@ -27,7 +26,7 @@ additional slides stained with cytokeratin immunohistochemistry were used. If ho
 with the dataset, then please report your findings at the forum.
 
 
-## 2-2) Data Argumentation
+### 2-2) Data Argumentation
 
 Convert Images to Horizontal Flip
 Convert Images to Vertical Flip
@@ -35,26 +34,35 @@ Convert Images to Gray Scale Randomly (percentage = 10%)
 Convert Images brightness, contrast, saturation, hue slightly 
 
 
-## 2-3) Mask
+### 2-3) Mask
 
 
-## 2-4) Hard Mining
+### 2-4) Hard Mining
 
 
 
 # 3. Train
 
-## 3-1) Optimizer 
+### 3-1) Optimizer 
 [Stochastic Gradient Descent Optimizer](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)
 
 
-## 3-2) Loss Function
+### 3-2) Loss Function
 Binary Cross Entropy Loss (torch.nn.BCELoss)
 
 
-## 3-3) Hyperparameter
+### 3-3) Hyperparameter
 
+    patch size = 304
 
+    normal threshold = 0.1  # normal mask inclusion ratio that select normal patches
+    tumor threshold = 0.8   # tumor mask inclusion ratio that select tumor patches
+    tissue threshold = 0.4  # tisse mask inclusion ratio that select tissue patches
+
+    default learning rate = 0.005  # defalut learning ratio
+    momentum = 0.9      # SGD optimizer parameter, 'momentum'
+    weight decay = 5e-4 # SGD optimizer parameter, 'weight_decay'
+    
 
 # 4. Validation, Test
 
@@ -68,13 +76,15 @@ Binary Cross Entropy Loss (torch.nn.BCELoss)
 
 [torchvision](http://pytorch.org/docs/master/torchvision/transforms.html?highlight=torchvision%20transform)
 
-[os](http://www.pythonforbeginners.com/os/pythons-os-module)
+[openslide](http://openslide.org/api/python/)
+
+[opencv](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_tutorials.html)
 
 [argparse](http://pytorch.org/docs/0.3.0/notes/cuda.html?highlight=argparse)
 
-[csv](https://docs.python.org/3/library/csv.html?highlight=csv#module-contents)
-
 [matplotlib](https://matplotlib.org/)
+
+etcs..
 
 
 # 7. Usage
