@@ -8,13 +8,13 @@ An output of model is a float number from 0 to 1. (0: Normal, 1: Tumor)
 
 
 ### 1-2) Architecture
-```
-models/densenet.py
-models/resnet.py
-```
+    ```
+    models/densenet.py
+    models/resnet.py
+    ```
 
-[DenseNet](https://arxiv.org/abs/1608.06993)
- / [ResNet](https://arxiv.org/abs/1512.03385)
+    [DenseNet](https://arxiv.org/abs/1608.06993)
+    / [ResNet](https://arxiv.org/abs/1512.03385)
 
 ![](https://i.imgur.com/7yH9SKm.jpg)
 
@@ -22,11 +22,7 @@ models/resnet.py
 
 
 # 2. Dataset
-```
-utils.py
-dataset_train.py
-dataset_eval.py
-```
+
 
 ### 2-1) Overview
 [CAMELYON17](https://camelyon17.grand-challenge.org/) is the second grand challenge in pathology organised 
@@ -38,23 +34,29 @@ additional slides stained with cytokeratin immunohistochemistry were used. If ho
 with the dataset, then please report your findings at the forum.
 
 
+    ```
+    utils.py
+    dataset_train.py
+    dataset_eval.py
+    ```
+
 ### 2-2) Data Argumentation
 
-Convert Images to Horizontal Flip
-Convert Images to Vertical Flip
-Convert Images to Gray Scale Randomly (percentage = 10%)
-Convert Images brightness, contrast, saturation, hue slightly 
+    Convert Images to Horizontal Flip
+    Convert Images to Vertical Flip
+    Convert Images to Gray Scale Randomly (percentage = 10%)
+    Convert Images brightness, contrast, saturation, hue slightly 
 
 
 ### 2-3) Mask
 Using several masks, patch is extracted from them with mask inclusion ratio(hyperparameter) 
 
-- Tissue Mask
-![]()
-- Tumor Mask
-![]()
-- Normal Mask
-![]()
+    - Tissue Mask
+    ![]()
+    - Tumor Mask
+    ![]()
+    - Normal Mask
+    ![]()
 
 ### 2-4) Hard Mining
 Difficult train dataset which predicted incorrectly several times is collected in csv file.
@@ -62,16 +64,16 @@ Net is trained with combination of difficult train dataset and original train da
 
 
 # 3. Train
-```
-train.py
-```
+    ```
+    train.py
+    ```
 
 ### 3-1) Optimizer 
-[Stochastic Gradient Descent Optimizer](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)
+    [Stochastic Gradient Descent Optimizer](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)
 
 
 ### 3-2) Loss Function
-Binary Cross Entropy Loss (torch.nn.BCELoss)
+    Binary Cross Entropy Loss (torch.nn.BCELoss)
 
 
 ### 3-3) Hyperparameter
@@ -92,24 +94,24 @@ Binary Cross Entropy Loss (torch.nn.BCELoss)
 
 
 # 5. HeatMap
-```
-eval.py
-```
+    ```
+    eval.py
+    ```
 
 # 6. Requirement
-[torch](http://pytorch.org/docs/master/nn.html)
+    [torch](http://pytorch.org/docs/master/nn.html)
 
-[torchvision](http://pytorch.org/docs/master/torchvision/transforms.html?highlight=torchvision%20transform)
+    [torchvision](http://pytorch.org/docs/master/torchvision/transforms.html?highlight=torchvision%20transform)
 
-[openslide](http://openslide.org/api/python/)
+    [openslide](http://openslide.org/api/python/)
 
-[opencv](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_tutorials.html)
+    [opencv](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_tutorials.html)
 
-[argparse](http://pytorch.org/docs/0.3.0/notes/cuda.html?highlight=argparse)
+    [argparse](http://pytorch.org/docs/0.3.0/notes/cuda.html?highlight=argparse)
 
-[matplotlib](https://matplotlib.org/)
+    [matplotlib](https://matplotlib.org/)
 
-etcs..
+    etcs..
 
 
 # 7. Usage
