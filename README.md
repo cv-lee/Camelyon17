@@ -8,17 +8,19 @@ An output of model is a float number from 0 to 1. (0: Normal, 1: Tumor)
 
 
 ### 1-2) Architecture
+[DenseNet](https://arxiv.org/abs/1608.06993)
+[ResNet](https://arxiv.org/abs/1512.03385)
 ![](https://i.imgur.com/7yH9SKm.jpg)
 
 
 
 
 # 2. Dataset
-'''
+```
 utils.py
 dataset_train.py
 dataset_eval.py
-'''
+```
 
 ### 2-1) Overview
 [CAMELYON17](https://camelyon17.grand-challenge.org/) is the second grand challenge in pathology organised 
@@ -54,9 +56,9 @@ Net is trained with combination of difficult train dataset and original train da
 
 
 # 3. Train
-'''
+```
 train.py
-'''
+```
 
 ### 3-1) Optimizer 
 [Stochastic Gradient Descent Optimizer](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)
@@ -84,9 +86,9 @@ Binary Cross Entropy Loss (torch.nn.BCELoss)
 
 
 # 5. HeatMap
-'''
+```
 eval.py
-'''
+```
 
 # 6. Requirement
 [torch](http://pytorch.org/docs/master/nn.html)
