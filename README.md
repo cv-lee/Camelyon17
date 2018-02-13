@@ -8,13 +8,13 @@ An output of model is a float number from 0 to 1. (0: Normal, 1: Tumor)
 
 
 ### 1-2) Architecture
-    ```
-    models/densenet.py
-    models/resnet.py
-    ```
+```
+models/densenet.py
+models/resnet.py
+```
 
-    [DenseNet](https://arxiv.org/abs/1608.06993)
-    / [ResNet](https://arxiv.org/abs/1512.03385)
+[DenseNet](https://arxiv.org/abs/1608.06993)
+/ [ResNet](https://arxiv.org/abs/1512.03385)
 
 ![](https://i.imgur.com/7yH9SKm.jpg)
 
@@ -34,29 +34,29 @@ additional slides stained with cytokeratin immunohistochemistry were used. If ho
 with the dataset, then please report your findings at the forum.
 
 
-    ```
-    utils.py
-    dataset_train.py
-    dataset_eval.py
-    ```
+```
+utils.py
+dataset_train.py
+dataset_eval.py
+```
 
 ### 2-2) Data Argumentation
 
-    Convert Images to Horizontal Flip
-    Convert Images to Vertical Flip
-    Convert Images to Gray Scale Randomly (percentage = 10%)
-    Convert Images brightness, contrast, saturation, hue slightly 
+Convert Images to Horizontal Flip
+Convert Images to Vertical Flip
+Convert Images to Gray Scale Randomly (percentage = 10%)
+Convert Images brightness, contrast, saturation, hue slightly 
 
 
 ### 2-3) Mask
 Using several masks, patch is extracted from them with mask inclusion ratio(hyperparameter) 
 
-    - Tissue Mask
-    ![]()
-    - Tumor Mask
-    ![]()
-    - Normal Mask
-    ![]()
+- Tissue Mask
+![]()
+- Tumor Mask
+![]()
+- Normal Mask
+![]()
 
 ### 2-4) Hard Mining
 Difficult train dataset which predicted incorrectly several times is collected in csv file.
@@ -64,16 +64,16 @@ Net is trained with combination of difficult train dataset and original train da
 
 
 # 3. Train
-    ```
-    train.py
-    ```
+```
+train.py
+```
 
 ### 3-1) Optimizer 
-    [Stochastic Gradient Descent Optimizer](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)
+[Stochastic Gradient Descent Optimizer](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)
 
 
 ### 3-2) Loss Function
-    Binary Cross Entropy Loss (torch.nn.BCELoss)
+Binary Cross Entropy Loss (torch.nn.BCELoss)
 
 
 ### 3-3) Hyperparameter
@@ -92,55 +92,55 @@ Net is trained with combination of difficult train dataset and original train da
 # 4. Validation, Test
 
 ### 4-1) Statistical index
-    ![](https://i.imgur.com/xewvt7l.png)
-    ![](https://i.imgur.com/aaSab5K.png)
-    ![](https://i.imgur.com/pqORws5.png)
-    ![](https://i.imgur.com/t6iq2mx.png)
+![](https://i.imgur.com/xewvt7l.png)
+![](https://i.imgur.com/aaSab5K.png)
+![](https://i.imgur.com/pqORws5.png)
+![](https://i.imgur.com/t6iq2mx.png)
 
 
 ### 4-2) Checkpoint
     
-    Net, Accuracy, Loss, Recall, Specificity, Precision, F1_score, AUC, epoch, learning rate, threshold
+Net, Accuracy, Loss, Recall, Specificity, Precision, F1_score, AUC, epoch, learning rate, threshold
     
 
 
 # 5. HeatMap
-    ```
-    eval.py
-    ```
-    ![](https://i.imgur.com/2xHSWQy.png)
-    ![](https://i.imgur.com/boAJTw5.png)
-    ![](https://i.imgur.com/PjPJOHk.png)
-    ![](https://i.imgur.com/wvRQXzK.png)
-    ![](https://i.imgur.com/iVDMIR4.png)
-    ![](https://i.imgur.com/PvEVs8f.png)
+```
+eval.py
+```
+![](https://i.imgur.com/2xHSWQy.png)
+![](https://i.imgur.com/boAJTw5.png)
+![](https://i.imgur.com/PjPJOHk.png)
+![](https://i.imgur.com/wvRQXzK.png)
+![](https://i.imgur.com/iVDMIR4.png)
+![](https://i.imgur.com/PvEVs8f.png)
 
 # 6. Requirement
-    [torch](http://pytorch.org/docs/master/nn.html)
+[torch](http://pytorch.org/docs/master/nn.html)
 
-    [torchvision](http://pytorch.org/docs/master/torchvision/transforms.html?highlight=torchvision%20transform)
+[torchvision](http://pytorch.org/docs/master/torchvision/transforms.html?highlight=torchvision%20transform)
 
-    [openslide](http://openslide.org/api/python/)
+[openslide](http://openslide.org/api/python/)
 
-    [opencv](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_tutorials.html)
+[opencv](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_tutorials.html)
 
-    [argparse](http://pytorch.org/docs/0.3.0/notes/cuda.html?highlight=argparse)
+[argparse](http://pytorch.org/docs/0.3.0/notes/cuda.html?highlight=argparse)
 
-    [matplotlib](https://matplotlib.org/)
+[matplotlib](https://matplotlib.org/)
 
-    etcs..
+etcs..
 
 
 # 7. Usage
-    1.Download the image zip files in camelyon17.
-    2.To create the dataset, run the utils.py.
-    3.Using the patches, train the model in train.py.
-    4.Run the eval.py.
+1) Download the image zip files in camelyon17.
+2) To create the dataset, run the utils.py.
+3) Using the patches, train the model in train.py.
+4) Run the eval.py.
 
 # 8. Reference
-    [camelyon17](https://camelyon17.grand-challenge.org/results/)
+- [camelyon17](https://camelyon17.grand-challenge.org/results/)
 
-    [Resnet](https://arxiv.org/pdf/1512.03385.pdf)
+- [Resnet](https://arxiv.org/pdf/1512.03385.pdf)
 
-    [Densenet](https://arxiv.org/pdf/1608.06993v5.pdf)
+- [Densenet](https://arxiv.org/pdf/1608.06993v5.pdf)
 
