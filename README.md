@@ -94,13 +94,12 @@ Binary Cross Entropy Loss (torch.nn.BCELoss)
 ### 4-1) Statistical index
 ![](https://i.imgur.com/xewvt7l.png)
 ![](https://i.imgur.com/aaSab5K.png)
-![](https://i.imgur.com/pqORws5.png)
-![](https://i.imgur.com/t6iq2mx.png)
 
 
 ### 4-2) Checkpoint
-    
-Net, Accuracy, Loss, Recall, Specificity, Precision, F1_score, AUC, epoch, learning rate, threshold
+- Checkpoint Info
+Net, Accuracy, Loss, Recall, Specificity, Precision, 
+F1_score,AUC, epoch, learning rate, threshold
     
 
 
@@ -108,27 +107,18 @@ Net, Accuracy, Loss, Recall, Specificity, Precision, F1_score, AUC, epoch, learn
 ```
 eval.py
 ```
-![](https://i.imgur.com/2xHSWQy.png)
-![](https://i.imgur.com/boAJTw5.png)
-![](https://i.imgur.com/PjPJOHk.png)
-![](https://i.imgur.com/wvRQXzK.png)
-![](https://i.imgur.com/iVDMIR4.png)
+HeatMap Example
+
 ![](https://i.imgur.com/PvEVs8f.png)
 
 # 6. Requirement
-[torch](http://pytorch.org/docs/master/nn.html)
-
-[torchvision](http://pytorch.org/docs/master/torchvision/transforms.html?highlight=torchvision%20transform)
-
-[openslide](http://openslide.org/api/python/)
-
-[opencv](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_tutorials.html)
-
-[argparse](http://pytorch.org/docs/0.3.0/notes/cuda.html?highlight=argparse)
-
-[matplotlib](https://matplotlib.org/)
-
-etcs..
+- [torch](http://pytorch.org/docs/master/nn.html)
+- [torchvision](http://pytorch.org/docs/master/torchvision/transforms.html?highlight=torchvision%20transform)
+- [openslide](http://openslide.org/api/python/)
+- [opencv](https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_tutorials.html)
+- [argparse](http://pytorch.org/docs/0.3.0/notes/cuda.html?highlight=argparse)
+- [matplotlib](https://matplotlib.org/)
+- etcs..
 
 
 # 7. Usage
@@ -139,8 +129,6 @@ etcs..
 
 # 8. Reference
 - [camelyon17](https://camelyon17.grand-challenge.org/results/)
-
 - [Resnet](https://arxiv.org/pdf/1512.03385.pdf)
-
 - [Densenet](https://arxiv.org/pdf/1608.06993v5.pdf)
 
