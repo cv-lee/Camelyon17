@@ -92,10 +92,10 @@ Net is trained with combination of difficult train dataset and original train da
 # 4. Validation, Test
 
 ### 4-1) Statistical index
-    ![](https://imgur.com/lfUaRHH)
-    ![](https://imgur.com/H9mrskq)
-    ![](https://imgur.com/D5o3Fa7)
-    ![](https://imgur.com/2PoQ0gz)
+    ![](https://i.imgur.com/xewvt7l.png)
+    ![](https://i.imgur.com/aaSab5K.png)
+    ![](https://i.imgur.com/pqORws5.png)
+    ![](https://i.imgur.com/t6iq2mx.png)
 
 
 ### 4-2) Checkpoint
@@ -108,6 +108,12 @@ Net is trained with combination of difficult train dataset and original train da
     ```
     eval.py
     ```
+    ![](https://i.imgur.com/2xHSWQy.png)
+    ![](https://i.imgur.com/boAJTw5.png)
+    ![](https://i.imgur.com/PjPJOHk.png)
+    ![](https://i.imgur.com/wvRQXzK.png)
+    ![](https://i.imgur.com/iVDMIR4.png)
+    ![](https://i.imgur.com/PvEVs8f.png)
 
 # 6. Requirement
     [torch](http://pytorch.org/docs/master/nn.html)
