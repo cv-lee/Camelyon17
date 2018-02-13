@@ -49,11 +49,11 @@ Convert Images brightness, contrast, saturation, hue slightly
 Using several masks, patch is extracted from them with mask inclusion ratio(hyperparameter) 
 
 - Tissue Mask
-![](https://i.imgur.com/snKiKNw.png)
+![](https://i.imgur.com/y3hnyQA.png)
 - Tumor Mask
-![](https://i.imgur.com/4fqJNBx.png)
+![](https://i.imgur.com/o9TEHJ7.png)
 - Normal Mask
-![](https://i.imgur.com/QaZ3OP7.png)
+![](https://i.imgur.com/vlH89Zs.png)
 
 ### 2-4) Hard Mining
 Difficult train dataset which predicted incorrectly several times is collected in csv file.
@@ -97,8 +97,15 @@ Binary Cross Entropy Loss (torch.nn.BCELoss)
 - Info: Net, Accuracy, Loss, Recall, Specificity, Precision, F1_score,AUC, epoch, learning rate, threshold
     
 
+# 5. Result
 
-# 5. HeatMap
+- First trial
+![](https://i.imgur.com/LOFysOe.png)
+
+- Second trial
+![](https://i.imgur.com/nD8k8s3.png)
+
+# 6. HeatMap
 ```
 eval.py
 ```
@@ -106,7 +113,7 @@ eval.py
 
 ![](https://i.imgur.com/PvEVs8f.png)
 
-# 6. Requirement
+# 7. Requirement
 - [torch](http://pytorch.org/docs/master/nn.html)
 - [torchvision](http://pytorch.org/docs/master/torchvision/transforms.html?highlight=torchvision%20transform)
 - [openslide](http://openslide.org/api/python/)
@@ -116,13 +123,13 @@ eval.py
 - etcs..
 
 
-# 7. Usage
+# 8. Usage
 1) Download the image zip files in camelyon17.
 2) To create the dataset, run the utils.py.
 3) Using the patches, train the model in train.py.
 4) Run the eval.py.
 
-# 8. Reference
+# 9. Reference
 - [camelyon17](https://camelyon17.grand-challenge.org/results/)
 - [Resnet](https://arxiv.org/pdf/1512.03385.pdf)
 - [Densenet](https://arxiv.org/pdf/1608.06993v5.pdf)
