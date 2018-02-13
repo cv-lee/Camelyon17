@@ -13,9 +13,6 @@ models/densenet.py
 models/resnet.py
 ```
 
-[DenseNet](https://arxiv.org/abs/1608.06993)
-/ [ResNet](https://arxiv.org/abs/1512.03385)
-
 ![](https://i.imgur.com/7yH9SKm.jpg)
 
 
@@ -52,11 +49,11 @@ Convert Images brightness, contrast, saturation, hue slightly
 Using several masks, patch is extracted from them with mask inclusion ratio(hyperparameter) 
 
 - Tissue Mask
-![]()
+![](https://i.imgur.com/snKiKNw.png)
 - Tumor Mask
-![]()
+![](https://i.imgur.com/4fqJNBx.png)
 - Normal Mask
-![]()
+![](https://i.imgur.com/QaZ3OP7.png)
 
 ### 2-4) Hard Mining
 Difficult train dataset which predicted incorrectly several times is collected in csv file.
@@ -97,9 +94,7 @@ Binary Cross Entropy Loss (torch.nn.BCELoss)
 
 
 ### 4-2) Checkpoint
-- Checkpoint Info
-Net, Accuracy, Loss, Recall, Specificity, Precision, 
-F1_score,AUC, epoch, learning rate, threshold
+- Info: Net, Accuracy, Loss, Recall, Specificity, Precision, F1_score,AUC, epoch, learning rate, threshold
     
 
 
@@ -107,7 +102,7 @@ F1_score,AUC, epoch, learning rate, threshold
 ```
 eval.py
 ```
-HeatMap Example
+- HeatMap Example
 
 ![](https://i.imgur.com/PvEVs8f.png)
 
