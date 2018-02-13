@@ -91,6 +91,17 @@ Net is trained with combination of difficult train dataset and original train da
 
 # 4. Validation, Test
 
+### 4-1) Statistical index
+    ![](https://imgur.com/lfUaRHH)
+    ![](https://imgur.com/H9mrskq)
+    ![](https://imgur.com/D5o3Fa7)
+    ![](https://imgur.com/2PoQ0gz)
+
+
+### 4-2) Checkpoint
+    
+    Net, Accuracy, Loss, Recall, Specificity, Precision, F1_score, AUC, epoch, learning rate, threshold
+    
 
 
 # 5. HeatMap
@@ -115,9 +126,15 @@ Net is trained with combination of difficult train dataset and original train da
 
 
 # 7. Usage
-
+    1.Download the image zip files in camelyon17.
+    2.To create the dataset, run the utils.py.
+    3.Using the patches, train the model in train.py.
+    4.Run the eval.py.
 
 # 8. Reference
+    [camelyon17](https://camelyon17.grand-challenge.org/results/)
 
+    [Resnet](https://arxiv.org/pdf/1512.03385.pdf)
 
+    [Densenet](https://arxiv.org/pdf/1608.06993v5.pdf)
 
