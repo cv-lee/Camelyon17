@@ -133,6 +133,5 @@ eval.py
 - [camelyon17](https://camelyon17.grand-challenge.org/results/)
 - [Resnet](https://arxiv.org/pdf/1512.03385.pdf)
 - [Densenet](https://arxiv.org/pdf/1608.06993v5.pdf)
-- [Overview of mini-batch gradient descent Geoffrey Hinton](https://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec0.pdf)
 - [Improving neural networks by preventing co-adaptation of feature detectors
 G. E. Hinton](http://www.cs.toronto.edu/~fritz/absps/dropout.pdf)
