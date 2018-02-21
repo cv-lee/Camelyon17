@@ -111,7 +111,7 @@ eval.py
 ```
 - HeatMap Example
 
-![](https://i.imgur.com/PvEVs8f.png)
+![](https://i.imgur.com/0e2NeHS.jpg)
 
 # 7. Requirement
 - [torch](http://pytorch.org/docs/master/nn.html)
