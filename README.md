@@ -39,10 +39,10 @@ dataset_eval.py
 
 ### 2-2) Data Argumentation
 
-Convert Images to Horizontal Flip
-Convert Images to Vertical Flip
-Convert Images to Gray Scale Randomly (percentage = 10%)
-Convert Images brightness, contrast, saturation, hue slightly 
+Convert Images to Horizontal Flip__
+Convert Images to Vertical Flip__
+Convert Images to Gray Scale Randomly (percentage = 10%)__
+Convert Images brightness, contrast, saturation, hue slightly
 
 
 ### 2-3) Mask
